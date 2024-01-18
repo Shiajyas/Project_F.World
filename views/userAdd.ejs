@@ -1,0 +1,185 @@
+<div
+  class="d-flex justify-content-between flex-warp flex-md nowarp align-items-center pt-3 pb-2 mb-3 border bottom"
+>
+  <h1 class="h2">Customer</h1>
+  <div class="btn-toolbar mb-2 mb-md 0">
+    <div class="btn-group me-2">
+      <button class="btn btn-sm btn-outline-primary">?</button>
+    </div>
+  </div>
+</div>
+
+<div class="col py-3">
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin/dashbord">Custmer</a></li>
+          <li class="breadcrumb-item active">New Customer</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="col text-end fw-lighter">
+      <b>UserId</b>
+    </div>
+  </div>
+</div>
+
+<form action="/admin/customer/edit" method="put">
+  <div class="from-group mb-4">
+    <div class="col">
+      <label for="firstName">User Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        value=""
+        placeholder="User Name"
+        required
+      />
+    </div>
+
+
+  <div class="row from-grow mb-4">
+    <div class="col">
+      <label for="con">Contact</label>
+      <input
+        type="text"
+        class="form-control"
+        id="conta"
+        name="contact"
+        value=""
+        placeholder="Contact"
+        required
+      />
+    </div>
+    <div class="col">
+      <label for="Email">Email</label>
+      <input
+        type="text"
+        class="form-control"
+        id="Email"
+        name="email"
+        value=""
+        placeholder="Email"
+        required
+      />
+    </div>
+  </div>
+
+  
+  <div class="row from-grow mb-4">
+    <div class="col">
+      <label for="con">District</label>
+      <input
+        type="text"
+        class="form-control"
+        id="con"
+        name="district"
+        value=""
+        placeholder="District"
+        required
+      />
+    </div>
+    <div class="col">
+      <label for="Email">State</label>
+      <input
+        type="text"
+        class="form-control"
+        id="Email"
+        name="state"
+        value=""
+        placeholder="State"
+        required
+      />
+    </div>
+  </div>
+  
+  <div class="row from-grow mb-4">
+    <div class="col">
+      <label for="con">Pincode</label>
+      <input
+        type="text"
+        class="form-control"
+        id="con"
+        name="pincode"
+        value=""
+        placeholder="Pincode"
+        required
+      />
+    </div>
+    <div class="col">
+      <label for="Email">Country</label>
+      <input
+        type="text"
+        class="form-control"
+        id="Email"
+        name="country"
+        value=""
+        placeholder="Country"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="row from-grow mb-4">
+    <div class="col">
+      <label for="dob">Date of Birth</label>
+      <input
+        type="date"
+        class="form-control"
+        id="dob"
+        name="dob"
+        value=""
+        placeholder="Date of Birth"
+        required
+      />
+    </div>
+    <div class="col">
+      <label>Status</label><br>
+      <input
+        type="checkbox"
+        id="status"
+        name="status"
+        value="active"
+      />
+      <label for="status">Active</label><br>
+      <input
+        type="checkbox"
+        id="statusBlocked"
+        name="status"
+        value="blocked"
+      />
+      <label for="statusBlocked">Blocked</label><br>
+      <div class="col">
+        <label for="days">Number of Days</label>
+        <input
+          type="number"
+          class="form-control"
+          id="days"
+          name="days"
+          value=""
+          placeholder="Number of Days"
+          required
+        />
+      </div>
+    </div>
+    
+  </div>
+
+
+  <div class="form form-group mb-4">
+    <label for="details">Adreess</label>
+    <textarea
+      class="form-control"
+      name="adreess"
+      id="details"
+      placeholder="Customer Details"
+    ></textarea>
+  </div>
+  <div>
+    <button type="submit" class="btn btn-primary">Add user</button>
+  </div>
+</form>
+

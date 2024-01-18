@@ -1,0 +1,107 @@
+<div class="container-full">
+    <div class="row">
+      <div class="col-md-6 left-side text-center mt-5">
+        <div class="center-div mt-5">
+          <div class="bord">
+            <h3>
+              Don’t have an <br/>
+              Account Yet?
+            </h3>
+          </div>
+          <div>
+            <h5>Sign up to Continue</h5>
+          </div>
+          <a class="Signbutton" href="/user_signup">
+            <div class="border-around-small button">
+              <small>CREATE AN ACCOUNT</small>
+            </div>
+          </a>
+        </div>
+      </div>
+  
+      <div class="col-md-6 right-side mt-2">
+        <div class="center-div mt-5 " id="login">
+          <div class="container w-75 mt-5 py-3">
+            <div class="title">
+                  <!-- Error message display -->
+                 
+                  <div class="flash">
+                    <% if (success) { %>
+                      <div class="alert  alert-dismissible font-weight-bold" role="alert">
+                       <h6><%= success %></h6> 
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+                    <% } %>
+                  </div>
+              <h2 class="font-weight-bold">Reset your password</h2>
+            
+            </div>
+            <form action="/user/resetPassword" method="POST">
+         
+              <div class="form-group">
+                <div>
+                  <small>Email address</small>
+                </div>
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Email"
+                  name="email"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <div>
+                  <small>Password</small>
+                  <div class="input-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      placeholder="Password"
+                      name="password"
+                      id="passwordField"
+                      required
+                    />
+                   
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div>
+                  <small>Confirm Password</small>
+                  <div class="input-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      placeholder="Password"
+                      name="confirmPassword"
+                      id="passwordField"
+                      required
+                    />
+                   
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div>
+                  <small>Enter yor OTP</small>
+                  <div class="input-group">
+                    <input
+                      type="OTP"
+                      class="form-control"
+                      placeholder="Password"
+                      name="otp"
+                     
+                      required
+                    /> 
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-dark my-3">Submit</button><br />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

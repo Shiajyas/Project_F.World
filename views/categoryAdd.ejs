@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 mx-auto mt-4">
+            <div class="card shadow">
+           
+                <div class="card-body p-4">
+
+                
+                    <% if (error && error.length > 0) { %>
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <% error.forEach(function(message) { %>
+                                <p><%= message %></p>
+                            <% }); %>
+                        </div>
+                    <% } %>
+                
+                    <h3 class="card-title text-center mb-4">Add Category</h3>
+                    <form action="/admin/categories/add" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Category Name</label>
+                            <input type="text" name="name" class="form-control form-control-lg" placeholder="Enter category name.." required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Image URL</label>
+                            <input type="file" name="image" class="form-control form-control-lg" placeholder="Enter image URL.." required>
+                        </div>
+                        <button type="submit" class="btn btn-success my-3">Submit</button>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

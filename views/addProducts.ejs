@@ -1,0 +1,81 @@
+<div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+ 
+
+
+  <form action="/admin/products/add" method="POST" enctype="multipart/form-data">
+    <!-- Your form fields here, including the file input for image -->
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label for="firstName">Product Name</label>
+      <input type="text" class="form-control" id="firstName" name="name"  placeholder="Product Name" required>
+    </div>
+
+    <div class="col">
+      <label for="lastName">Brand</label>
+      <input type="text" class="form-control" id="lastName" name="brand" v placeholder="Brand" required>
+    </div>
+  </div>
+
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label for="tel">Price</label>
+      <input type="number" class="form-control" id="tel" name="price" val placeholder="Price" required>
+    </div>
+    <div class="col">
+      <label for="duration">Count in Stock</label>
+      <input type="number" class="form-control" id="duration" name="countInStock"  placeholder="countInStock">
+    </div>
+   <div class="col">
+        <label for="duration">Category</label>
+        <select name="CategoryId" id="category" class="form">
+      
+            <option value="">Select Category</option>
+            <% for(let category of Categories) { %>
+                <option value="<%= category.id %>"
+                    <%= category.id === Product.CategoryId ? "selected" : "" %>
+                ><%= category.name %></option>
+            <% } %>
+        </select>
+    </div>
+    <div class="col">
+      <label>It's Featured Product ?</label>
+      <div>
+        <label for="activeCheckbox">Yes</label>
+        <input type="radio" id="activeCheckbox" name="isFeatured" value="true">
+      </div>
+      <div>
+        <label for="inactiveCheckbox">No</label>
+        <input type="radio" id="inactiveCheckbox" name="isFeatured" value="false" >
+      </div>
+    </div>
+    <div class="col">
+      <label for="duration">Rating</label>
+      <input type="number" class="form-control" id="duration" name="rating"  placeholder="Rating">
+    </div>
+  </div>
+  <div class="col">
+    <label for="duration">Number of Reviews</label>
+    <input type="number" class="form-control" id="duration" name="numReviews"  placeholder="Num of Reviews">
+  </div>
+</div>
+
+ 
+<div class="form-group mb-4">
+  <label for="numReviews">Image</label>
+  <input type="file" class="form-control" id="numReviews" name="image">
+</div>
+
+
+  <div class="form-group mb-4">
+      <label for="details">Product Description</label>
+      <textarea class="form-control" name="description" id="details" cols="15" rows="8" placeholder="Product description"></textarea>
+  </div>
+
+  <div class="form-group mb-4">
+    <button type="submit" class="btn btn-primary">Add Products</button>
+
+  </div>
+
+</form>
+
+

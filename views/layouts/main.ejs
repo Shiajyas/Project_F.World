@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FashionStore</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/header.ejs') %>
+
+<div class="container-fluid">
+    <div class="row">
+
+
+
+
+    <main class="flex">
+    <%- body %>
+<!-- Assuming the HTML file is located in 'original_/public/' directory -->
+
+
+
+    </main>
+    </div>
+
+
+</div>
+<%- include('../partials/footer.ejs') %>
+<script>
+    function togglePasswordVisibility() {
+      var passwordField = document.getElementById("passwordField");
+      var eyeIcon = document.getElementById("eyeIcon");
+  
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+        eyeIcon.classList.remove("far", "fa-eye");
+        eyeIcon.classList.add("fas", "fa-eye-slash");
+      } else {
+        passwordField.type = "password";
+        eyeIcon.classList.remove("fas", "fa-eye-slash");
+        eyeIcon.classList.add("far", "fa-eye");
+      }
+    }
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+</body>
+</html>

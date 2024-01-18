@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 left-side text-center mt-5">
+      <div class="center-div mt-5">
+        <div class="bord">
+          <h3>
+            Don’t have an <br />
+            Account Yet?
+          </h3>
+        </div>
+        <div>
+          <h5>Sign up to Continue</h5>
+        </div>
+        <a class="Signbutton" href="/user/signup">
+          <div class="border-around-small button">
+            <small>CREATE AN ACCOUNT</small>
+          </div>
+        </a>
+      </div>
+    </div>
+
+   
+        
+ 
+
+    <div class="col-md-6 right-side mt-5">
+      <div class="center-div mt-5 user_login" id="login">
+        <div class="container w-75 mt-5 py-3">
+          <div class="title">
+
+                <!-- Error message display -->
+                <% if (errorMsg) { %>
+                  <div class="alert  alert-dismissible font-weight-bold" role="alert">
+                    <%= errorMsg %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                <% } %>
+        
+                
+            <h2 class="font-weight-bold">Login</h2>
+          
+          </div>
+          <form action="/user/login" method="POST">
+            <div class="form-group">
+              <div>
+                <small>Email address</small>
+              </div>
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Email"
+                name="email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <div>
+                <small>Password</small>
+                <div class="input-group">
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Password"
+                    name="password"
+                    id="passwordField"
+                    required
+                  />
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    onclick="togglePasswordVisibility()">
+                    <i id="eyeIcon" class="far fa-eye"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-dark my-3">Login</button><br />
+            <a href="/user/forgetPassword" >Forgot password?</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

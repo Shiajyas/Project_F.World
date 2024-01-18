@@ -1,0 +1,256 @@
+body {
+    font-size: .875rem;
+    
+  }
+  .flex{
+    background-image: url("../pics/apparel-choosing-clothing-fashion.jpg");
+   background-size: cover;
+  
+  }
+  .feather {
+    width: 25px;
+    height: 16px;
+  }
+
+
+
+ .alert {
+  font-size: larger;
+ }
+  
+  /*
+   * Sidebar
+   */
+  
+  .sidebar {
+    position: fixed;
+    top: 0;
+    /* rtl:raw:
+    right: 0;
+    */
+    bottom: 0;
+    /* rtl:remove */
+    left: 0;
+    z-index: 100; /* Behind the navbar */
+    padding: 48px 0 0; /* Height of navbar */
+ 
+  }
+  
+  @media (max-width: 767.98px) {
+    .sidebar {
+      top: 5rem;
+    }
+  }
+  
+  .sidebar-sticky {
+    height: calc(100vh - 48px);
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  }
+  
+  .sidebar .nav-link {
+    font-weight: 100;
+    color: #333;
+  }
+  
+  .sidebar .nav-link .feather {
+    margin-right: 4px;
+  
+  }
+  
+  .sidebar .nav-link.active {
+    color: #2470dc;
+  }
+  
+  .sidebar .nav-link:hover .feather,
+  .sidebar .nav-link.active .feather {
+    color: inherit;
+  }
+  
+  .sidebar-heading {
+    font-size: .75rem;
+  }
+  
+  /*
+   * Navbar
+   */
+
+  .navbar{
+    background: rgb(238,174,202);
+background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+ height: 100px;
+
+ 
+  }
+  .logo{
+    height: 100px;
+    width: 100px;
+  }
+  
+  .navbar-brand {
+   
+    /* padding-top: .75rem; */
+    padding-bottom: .75rem;
+    font-size: xx-large;
+    font-weight: 400;
+  color: black;
+    font-style: initial;
+    /* background-color: rgba(0, 0, 0, .25); */
+    /* box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25); */
+  }
+  
+  .navbar .navbar-toggler {
+    top: .25rem;
+    right: 1rem;
+  }
+  
+  .navbar .form-control {
+    padding: .75rem 1rem;
+  }
+  
+  .navbar .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: black;
+    opacity: 1; /* Firefox */
+  }
+.nav-link{
+  font-size: 20px;
+  color: #333;
+}
+ 
+  .form-control-dark {
+    color: black;
+    background-color: rgba(255, 255, 255, .1);
+    border-color: rgba(255, 255, 255, .1);
+  }
+  
+  .form-control-dark:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+  }
+
+  .left-side,
+  .right-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+  }
+
+  .left-side.h5{
+    border-radius: 20px;
+  }
+  
+  .center-div {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+  }
+/* logo */
+.logo img {
+  max-width: 40px; /* Adjust the max-width of the logo */
+  margin-right: 5px; /* Add some spacing between the logo and text */
+  margin-left: 0;
+}
+
+.Signbutton{
+  text-decoration: none;
+  color: black;
+  border: #c61111;
+}
+
+
+.border-around-small {
+  border: 1px solid #ced4da;
+  padding: 5px;
+  margin-bottom: 10px;
+  max-width: 200px; /* Adjust the maximum width of the boxes */
+  margin: 0 auto; /* Center align the boxes */
+}
+
+@media (max-width: 767px) {
+  .center-div {
+    margin-top: 0.5rem; /* Reduce top margin */
+  }
+  .border-around-small {
+    margin-bottom: 5px; /* Reduce bottom margin */
+  }
+  .right-side {
+    margin-top: 1rem; /* Adjust the top margin for right-side on smaller screens */
+  }
+}
+
+/* Define button styles */
+.button {
+  background-color: transparent;
+
+  padding: 8px 16px; /* Example: Adding padding */
+  color: #000; /* Example: Adding text color */
+  /* Add other styles as needed */
+}
+
+/* Hover effect */
+.button:hover {
+  background-color: rgb(235, 227, 227);
+}
+
+.footer{
+  height: 50vh;
+}
+
+/* Sidebar */
+.sidebar {
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: #343a40; /* Sidebar background color */
+  padding-top: 60px; /* Adjust padding to accommodate the top navbar */
+}
+
+/* Sidebar links */
+.sidebar .nav-link {
+  color: #e45151; /* Sidebar link text color */
+}
+
+/* Navbar toggle button icon color */
+.navbar-toggler-icon {
+  color: #201313; /* Toggle button icon color */
+}
+
+/* Main content area */
+.main-content {
+  margin-left: 200px; /* Adjust the margin to accommodate the expanded sidebar */
+  transition: margin-left 0.3s ease; /* Smooth transition for expanding/collapsing the sidebar */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  /* Hide the main sidebar on small screens */
+  .sidebar {
+    display: none;
+  }
+
+  /* Adjust the margin of the main content to remove space when sidebar is hidden */
+  .main-content {
+    margin-left: 0;
+  }
+
+  /* Show the collapsed sidebar */
+  .collapse.show {
+    display: block;
+  }
+
+  /* Navbar toggle button styles for smaller screens */
+  .navbar-toggler {
+    display: block;
+    margin-right: 15px; /* Adjust margin for better spacing */
+  }
+
+  /* Navbar brand styles for smaller screens */
+  .navbar-brand {
+    margin-left: 15px; /* Adjust margin for better spacing */
+  }
+}
+
+
