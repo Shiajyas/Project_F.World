@@ -56,72 +56,73 @@ const addProductsGet = async (req, res) => {
 };
 
 
-const addProducts = asyncHandler( async (req, res) => {
+const addProducts = asyncHandler(async (req, res) => {
   console.log(req.body);
 
   // Validate CategoryId
   if (!req.body.CategoryId) {
-      console.log("Invalid CategoryId");
-      req.flash("error", 'Invalid Category');
-      return res.status(400).redirect("/admin/products");
+    console.log("Invalid CategoryId");
+    req.flash("error", 'Invalid Category');
+    return res.status(400).redirect("/admin/products");
   }
 
   const category = await Category.findById(req.body.CategoryId);
   if (!category) {
-      console.log("Invalid Category");
-      req.flash("error", 'Invalid Category');
-      return res.status(400).redirect("/admin/products");
+    console.log("Invalid Category");
+    req.flash("error", 'Invalid Category');
+    return res.status(400).redirect("/admin/products");
   }
 
   const {
-      name, description, richDescription, brand, price, CategoryId,
-      countInStock, rating, numReviews, isFeatured
+    name, description, richDescription, brand, price, CategoryId,
+    countInStock, rating, numReviews, isFeatured
   } = req.body;
 
   try {
-      if (!name) {
-          throw new Error('Product name is required');
-      }
+    if (!name) {
+      throw new Error('Product name is required');
+    }
 
-      const file = req.file;
-      if (!file) {
-          throw new Error('No image in the request');
-      }
+    const files = req.files; // Assuming you are using 'multer' for file uploads
+    if (!files || files.length === 0) {
+      throw new Error('No images in the request');
+    }
 
-    const fileName = file.filename;
-const basePath = `${req.protocol}://${req.get('host')}/public/productImages`;
+    const basePath = `${req.protocol}://${req.get('host')}/public/productImages`;
 
-const newProduct = new Product({
-    name,
-    description,
-    richDescription,
-    brand,
-    price,
-    category: CategoryId,
-    countInStock,
-    rating,
-    numReviews,
-    isFeatured,
-    image: `${basePath}/${fileName}`
-});
+    const images = files.map(file => `${basePath}/${file.filename}`);
 
-      console.log(newProduct);
+    const newProduct = new Product({
+      name,
+      description,
+      richDescription,
+      brand,
+      price,
+      category: CategoryId,
+      countInStock,
+      rating,
+      numReviews,
+      isFeatured,
+      images: images // Use an array to store multiple image paths
+    });
 
-      const savedProduct = await newProduct.save();
+    console.log(newProduct);
 
-      if (!savedProduct) { 
-          console.log("Product update failed");
-          req.flash("error", 'Product upload failed');
-          return res.status(500).redirect("/admin/products");
-      }
+    const savedProduct = await newProduct.save();
 
-      console.log("Product update done");
-      req.flash("success", "Product upload successful");
-      return res.status(200).redirect("/admin/products");
-  } catch (error) {
-      console.error(error);
-      req.flash("error", error.message);
+    if (!savedProduct) {
+      console.log("Product update failed");
+      req.flash("error", 'Product upload failed');
       return res.status(500).redirect("/admin/products");
+    }
+
+    console.log("Product update done");
+    req.flash("success", "Product upload successful");
+    return res.status(200).redirect("/admin/products");
+  } catch (error) {
+    console.error(error);
+    req.flash("error", error.message);
+    return res.status(500).redirect("/admin/products");
   }
 });
 

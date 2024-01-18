@@ -25,11 +25,11 @@ app.use(session({
         maxAge: 1000*60*60*24*7 // 1 week
     }
 }))
-
+ 
 app.use(flash())
 
 //serving static files
-app.use("/public", express.static(path.join(__dirname, "public")));
+app.use("/public", express.static(path.join(__dirname, "public"))); 
 app.use("/css",express.static(path.join(__dirname,"public/css")))
 app.use("/pics",express.static(path.join(__dirname,"public/pics")))
 app.use("/productImages",express.static(path.join(__dirname,"public/productImages")))

@@ -21,7 +21,7 @@ const  {
       
 adminProductRoutes.get("/",adminProtectRules,adminRestrict("admin"),getProducts)
 adminProductRoutes.get("/add",adminProtectRules,adminRestrict("admin"),addProductsGet)
-adminProductRoutes.post("/add",adminProtectRules,adminRestrict("admin"),upload.single("image"),addProducts)
+adminProductRoutes.post("/add",adminProtectRules,adminRestrict("admin"),upload.array("images",4),addProducts)
 adminProductRoutes.get("/edit/:id",adminProtectRules,adminRestrict("admin"),getproductEdit)
 adminProductRoutes.put("/edit/:id",adminProtectRules,adminRestrict("admin"),editProdect) 
 adminProductRoutes.delete("/edit/:id",adminProtectRules,adminRestrict("admin"),deleteProdect)
