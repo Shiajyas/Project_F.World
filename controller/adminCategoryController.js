@@ -12,7 +12,7 @@ const viewCategory = async (req, res) => {
 
 const getCategory = async (req, res) => {
   const name = req.body.name; // Assuming you are getting the category name from the request body
-
+ 
   // Check for a valid category name
   if (filedCheker(name)) {
       req.flash("edit", `Unsuccessful Add category. Please provide a valid category name.`);

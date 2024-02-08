@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const Product = require("../models/productData");
 const { filedCheker } = require("../utils/authHandler");
 const path = require("path")
+const imageProcessing = require("../utils/cropedImage")
 
 const getProducts = asyncHandler(async (req, res) => {
   const messages = req.flash("error");
@@ -55,76 +56,81 @@ const addProductsGet = async (req, res) => {
   }
 };
 
-
-const addProducts = asyncHandler(async (req, res) => {
+const addProducts = async (req, res) => {
   console.log(req.body);
 
-  // Validate CategoryId
-  if (!req.body.CategoryId) {
-    console.log("Invalid CategoryId");
-    req.flash("error", 'Invalid Category');
-    return res.status(400).redirect("/admin/products");
-  }
-
-  const category = await Category.findById(req.body.CategoryId);
-  if (!category) {
-    console.log("Invalid Category");
-    req.flash("error", 'Invalid Category');
-    return res.status(400).redirect("/admin/products");
-  }
-
-  const {
-    name, description, richDescription, brand, price, CategoryId,
-    countInStock, rating, numReviews, isFeatured
-  } = req.body;
-
   try {
-    if (!name) {
-      throw new Error('Product name is required');
-    }
+      // Validate CategoryId
+      if (!req.body.CategoryId) {
+          console.log("Invalid CategoryId");
+          req.flash("error", 'Invalid Category');
+          return res.status(400).redirect("/admin/products");
+      }
 
-    const files = req.files; // Assuming you are using 'multer' for file uploads
-    if (!files || files.length === 0) {
-      throw new Error('No images in the request');
-    }
+      const category = await Category.findById(req.body.CategoryId);
+      if (!category) {
+          console.log("Invalid Category");
+          req.flash("error", 'Invalid Category');
+          return res.status(400).redirect("/admin/products");
+      }
 
-    const basePath = `${req.protocol}://${req.get('host')}/public/productImages`;
+      const {
+          name, description, richDescription, brand, price, CategoryId,
+          countInStock, rating, numReviews, isFeatured
+      } = req.body;
 
-    const images = files.map(file => `${basePath}/${file.filename}`);
+      if (!name) {
+          throw new Error('Product name is required');
+      }
 
-    const newProduct = new Product({
-      name,
-      description,
-      richDescription,
-      brand,
-      price,
-      category: CategoryId,
-      countInStock,
-      rating,
-      numReviews,
-      isFeatured,
-      images: images // Use an array to store multiple image paths
-    });
+      const files = req.files;
+      if (!files || files.length === 0) {
+          throw new Error('No images in the request');
+      }
 
-    console.log(newProduct);
+      const basePath = `${req.protocol}://${req.get('host')}/public/cropedImage`;
+      const processedImages = await Promise.all(files.map(async (file) => {
+          const inputFilePath = file.path;
+          const outputFolderPath = './public/cropedImage';
 
-    const savedProduct = await newProduct.save();
+          // Use imageProcessing function for image processing
+          return await imageProcessing(inputFilePath, outputFolderPath);
+      }));
 
-    if (!savedProduct) {
-      console.log("Product update failed");
-      req.flash("error", 'Product upload failed');
-      return res.status(500).redirect("/admin/products");
-    }
+      const newProduct = new Product({
+          name,
+          description,
+          richDescription,
+          brand,
+          price,
+          category: CategoryId,
+          countInStock,
+          rating,
+          numReviews,
+          isFeatured,
+          images: processedImages
+      });
 
-    console.log("Product update done");
-    req.flash("success", "Product upload successful");
-    return res.status(200).redirect("/admin/products");
+      console.log(newProduct);
+
+      const savedProduct = await newProduct.save();
+
+      if (!savedProduct) {
+          console.log("Product update failed");
+          req.flash("error", 'Product upload failed');
+          return res.status(500).redirect("/admin/products");
+      }
+
+      console.log("Product update done");
+      req.flash("success", "Product upload successful");
+      return res.status(200).redirect("/admin/products");
   } catch (error) {
-    console.error(error);
-    req.flash("error", error.message);
-    return res.status(500).redirect("/admin/products");
+      console.error(error);
+      req.flash("error", error.message);
+      return res.status(500).redirect("/admin/products");
   }
-});
+};
+
 
 
 const getproductEdit = asyncHandler(async (req, res) => {

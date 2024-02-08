@@ -13,12 +13,12 @@ connectDB()
 const app = express()
 const port = process.env.PORT || 5000
 
-app.use(cookie())
+app.use(cookie()) 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(methodOverride("_method")) 
-
+ 
 app.use(session({
-    secret: "secret",
+    secret: "secret", 
     resave: false,
     saveUninitialized: true,
     cookie:{  
