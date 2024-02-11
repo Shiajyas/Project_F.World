@@ -1,6 +1,6 @@
 const express = require("express");
 const adminProductRoutes = express.Router();
-const upload = require("../utils/imageUploader");
+const {upload} = require("../utils/imageUploader");
 const {
   getProducts,
   addProductsGet,

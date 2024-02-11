@@ -1,0 +1,138 @@
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    #sidebar {
+      width: 100%;
+      max-width: 200px;
+      height: 100%;
+      position: fixed;
+      top: 100px;
+      left: -100%;
+      background-color: #f1f1f1;
+      padding-top: 20px;
+      transition: left 0.3s ease-in-out;
+    }
+
+    #main-content {
+      margin-left: 0;
+      padding: 20px;
+      transition: margin-left 0.3s ease-in-out;
+    }
+
+    @media screen and (min-width: 768px) {
+      #sidebar {
+        left: 0;
+      }
+
+      #main-content {
+        margin-left: 250px;
+      }
+    }
+
+    #menu-btn {
+      display: block;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      display: none;
+    }
+  </style>
+
+  <button id="menu-btn" onclick="toggleSidebar()">☰ Open Sidebar</button>
+
+  <div id="sidebar">
+    <h2>Filter & Sort</h2>
+    <hr>
+    <label for="category">Category:</label>
+    <select id="category">
+      <option value="all">All Categories</option>
+      <option value="sports">Sports</option>
+      <option value="formal">Formal</option>
+      <!-- Add more categories as needed -->
+    </select>
+
+    <hr>
+
+    <label for="sort">Sort by:</label>
+    <select id="sort">
+      <option value="priceLowToHigh">Price: Low to High</option>
+      <option value="priceHighToLow">Price: High to Low</option>
+      <option value="newest">Newest Arrivals</option>
+      <!-- Add more sorting options as needed -->
+    </select>
+
+    <!-- Add more filter options as needed -->
+
+    <hr>
+
+    <button onclick="applyFilters()">Apply Filters</button>
+    <button onclick="resetFilters()">Reset Filters</button>
+  </div>
+
+  <div id="main-content">
+    <!-- Your main content goes here (product listings, etc.) -->
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const mainContent = document.getElementById('main-content');
+      const menuBtn = document.getElementById('menu-btn');
+
+      if (sidebar.style.left === '0px') {
+        sidebar.style.left = '-100%';
+        mainContent.style.marginLeft = '0';
+        menuBtn.innerHTML = '☰ Open Sidebar';
+      } else {
+        sidebar.style.left = '0';
+        mainContent.style.marginLeft = '250px';
+        menuBtn.innerHTML = '✕ Close Sidebar';
+      }
+    }
+
+    function applyFilters() {
+      // Fetch selected values and apply filters
+      const selectedCategory = document.getElementById('category').value;
+      const selectedSort = document.getElementById('sort').value;
+
+      // Implement your logic to filter and sort products
+
+      // For demonstration purposes, just logging the selected values
+      console.log('Category:', selectedCategory);
+      console.log('Sort:', selectedSort);
+    }
+
+    function resetFilters() {
+      // Reset all filters to default values
+      document.getElementById('category').value = 'all';
+      document.getElementById('sort').value = 'priceLowToHigh';
+
+      // Implement additional reset logic if needed
+
+      // Apply filters after reset (optional)
+      applyFilters();
+    }
+
+    // Show/hide the menu button based on screen width
+    window.addEventListener('resize', function () {
+      const menuBtn = document.getElementById('menu-btn');
+      const sidebar = document.getElementById('sidebar');
+
+      if (window.innerWidth < 768) {
+        menuBtn.style.display = 'block';
+        sidebar.style.left = '-100%';
+      } else {
+        menuBtn.style.display = 'none';
+        sidebar.style.left = '0';
+      }
+    });
+
+    // Trigger the resize event on page load
+    window.dispatchEvent(new Event('resize'));
+  </script>

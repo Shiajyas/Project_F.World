@@ -1,7 +1,147 @@
-<h1>USER DASHBORD</h1>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <h1>Welcome to your EJS template!</h1>
+<style>
+    body {
+        overflow: hidden;
+        font-family: 'Arial', sans-serif;
+    }
 
-    <% if (typeof token !== 'undefined') { %>
-        <p>Your token: <%= token %></p>
-    <% } else { %>
-        <p>No token available.</p>
-    <% } %>
+    .mt-50 {
+        margin-top: 100px;
+    }
+
+    .mb-50 {
+        margin-bottom: 50px;
+    }
+
+    .cards-container {
+        overflow-y: hidden;
+    }
+
+    .card {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, .125);
+        border-radius: .1875rem;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    .card-img-actions {
+        position: relative;
+    }
+
+    .card-body {
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1.25rem;
+        text-align: center;
+    }
+
+    .card-img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .star {
+        color: red;
+    }
+
+    .bg-cart {
+        background-color: orange;
+        color: #fff;
+    }
+
+    .bg-cart:hover {
+        color: #074931;
+    }
+
+    .bg-buy {
+        background-color: green;
+        color: #fff;
+        padding-right: 29px;
+    }
+
+    .bg-buy:hover {
+        color: #fff;
+    }
+
+    a {
+        text-decoration: none !important;
+    }
+
+    .bg-buy-now {
+        background-color: #3498db;
+        color: #fff;
+    }
+
+    .bg-buy-now:hover {
+        color: #a01010;
+    }
+
+    .category {
+        font-size: medium;
+    }
+
+    .text {
+        font-size: xx-large;
+        color: #610857;
+    }
+    .cards-container {
+        overflow-y: auto;
+        max-height: calc(100vh - 150px); /* Adjust the max-height as needed */
+    }
+
+</style>
+
+<!-- views/productDetails.ejs -->
+<div class="container mt-50 mb-50">
+    <div class="row cards-container">
+        <% products.forEach(product => { %>
+            <div class="col-md-4 mt-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-img-actions">
+                            <% if (product.images && product.images.length > 0) { %>
+                                <img src="<%= product.images[0] %>" class="card-img img-fluid" alt="<%= product.name %>">
+                            <% } else { %>
+                                <!-- Provide a default image or handle the case when no images are available -->
+                                <img src="/default-image.jpg" class="card-img img-fluid" alt="Default Image">
+                            <% } %>
+                        </div>
+                        <div class="card-body bg-light text-center">
+                            <div class="mb-2">
+                                <h6 class="text mb-2">
+                                    <a href="/productDetails/<%= product._id %>" class="text mb-4" data-abc="true"><%= product.name %></a>
+                                </h6>
+                                <a href="#" class="category" data-abc="true"><%= product.category.name %></a>
+                            </div>
+                            <h3 class="mb-0 font-weight-semibold">Rs.<%= product.price.toFixed(2) %></h3>
+                            <!-- Calculate and display stars based on rating -->
+                            <div>
+                                <% for (let i = 0; i < 5; i++) { %>
+                                    <% if (i < product.rating) { %>
+                                        <i class="fa fa-star star"></i>
+                                    <% } else { %>
+                                        <i class="fa fa-star-o star"></i>
+                                    <% } %>
+                                <% } %>
+                            </div>
+                            <div class="text-muted mb-3"><%= product.numReviews %> reviews</div>
+                            <button type="button" class="btn bg-cart"><i class="fa fa-cart-plus mr-2"></i> Add to cart</button>
+                            <button type="button" class="btn bg-buy-now"><i class="fa fa-shopping-cart mr-2"></i> Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>  

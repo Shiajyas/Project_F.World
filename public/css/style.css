@@ -18,10 +18,6 @@ body {
   font-size: larger;
  }
   
-  /*
-   * Sidebar
-   */
-  
   .sidebar {
     position: fixed;
     top: 0;
@@ -31,7 +27,7 @@ body {
     bottom: 0;
     /* rtl:remove */
     left: 0;
-    z-index: 100; /* Behind the navbar */
+
     padding: 48px 0 0; /* Height of navbar */
  
   }
@@ -42,40 +38,26 @@ body {
     }
   }
   
-  .sidebar-sticky {
-    height: calc(100vh - 48px);
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-  }
-  
-  .sidebar .nav-link {
-    font-weight: 100;
-    color: #333;
-  }
-  
-  .sidebar .nav-link .feather {
-    margin-right: 4px;
-  
-  }
-  
-  .sidebar .nav-link.active {
-    color: #2470dc;
-  }
-  
-  .sidebar .nav-link:hover .feather,
-  .sidebar .nav-link.active .feather {
-    color: inherit;
-  }
-  
-  .sidebar-heading {
-    font-size: .75rem;
-  }
-  
+
   /*
    * Navbar
    */
 
+   /* Add this CSS for the fixed header */
+
+
+/* Adjust the main content margin to accommodate the fixed navbar */
+.main-content {
+  margin-top: 120px; /* Adjust this value based on your navbar height */
+  margin-left: 200px; /* Adjust the margin to accommodate the expanded sidebar */
+  transition: margin-left 0.3s ease; /* Smooth transition for expanding/collapsing the sidebar */
+}
+
+
   .navbar{
+    position: fixed;
+    width: 100%;
+    z-index: 1030; /* Ensure navbar is above sidebar */
     background: rgb(238,174,202);
 background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
  height: 100px;
@@ -197,21 +179,6 @@ background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 
   height: 50vh;
 }
 
-/* Sidebar */
-.sidebar {
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  background-color: #343a40; /* Sidebar background color */
-  padding-top: 60px; /* Adjust padding to accommodate the top navbar */
-}
-
-/* Sidebar links */
-.sidebar .nav-link {
-  color: #e45151; /* Sidebar link text color */
-}
 
 /* Navbar toggle button icon color */
 .navbar-toggler-icon {

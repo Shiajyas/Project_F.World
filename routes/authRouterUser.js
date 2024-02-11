@@ -13,6 +13,7 @@ const {
   forgetPasswordPost,
   resetPassword,
   resetPasswordPost,
+  userLogout
 } = require("../controller/userAuthController")
 
 authRouterUser.get('/signup',userSignup); // GET request to render the signup form
@@ -24,7 +25,7 @@ authRouterUser.get("/forgetPassword",forgetPassword)
 authRouterUser.post("/forgetPassword",forgetPasswordPost)
 authRouterUser.post("/resetPassword",resetPasswordPost)
 authRouterUser.get("/resetPassword",resetPassword)
-
+authRouterUser.get("/logout",userLogout)
 
 
 module.exports = authRouterUser;

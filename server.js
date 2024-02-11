@@ -43,11 +43,12 @@ app.get("/",(req,res)=>{
     res.status(200).render("homePage")
 })
 
-app.use("/user", require("./routes/authRouterUser"))
+app.use("/user", require("./routes/authRouterUser"))    
 app.use("/admin", require("./routes/authRouterAdmin"))
 app.use("/admin/customer", require("./routes/adminCustomerRoutes"))
 app.use("/admin/categories", require("./routes/adminCategoryRoutes"))
 app.use("/admin/products", require("./routes/adminProductRoutes"))
+app.use("/productDetails/",require("./routes/productsRoutes"))
 
 app.listen(port, ()=>console.log(`Server running on : http://localhost:${port}`))
 

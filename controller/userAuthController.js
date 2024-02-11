@@ -8,9 +8,8 @@ const { use } = require('../routes/authRouterUser');
 const { error, log } = require('console'); 
 const sendEmail = require("../Utils/email")
 const bcrypt = require("bcryptjs");
-
-
-
+const Product = require("../models/productData")
+const Category = require("../models/categoryData")
 // Handle user signup POST request
 
 const userSignupPost = [
@@ -255,10 +254,25 @@ const forgetPassword = (req, res) => {
 };
 
 //render dashbord
-const userdashbord = (req,res)=>{
+const userdashbord = asyncHandler(async (req, res) => {
+  // Your asynchronous code here
+  try {
+      // Fetch a list of products from the database
+      const products = await Product.find().populate('category');
 
-  return res.status(200).render("userdashbord")
-}
+
+      // Render the product page view with the fetched product data
+      return res.status(200).render('userdashbord', {
+          layout: './layouts/main3',
+          title: 'Product Page',
+          products: products,
+      });
+  } catch (error) {
+      // Handle errors such as database query errors
+      console.error(error);
+      return res.status(500).render('404');
+  }
+});
 
 
 // Render user login page
@@ -269,11 +283,14 @@ const userLogin = (req, res) => {
 
 // Render signup page
 const userSignup = (req, res) => {
- return res.render("signup", { successMsg: "", error: [] });
+ return res.status(200).render("signup", { successMsg: "", error: [] });
 };
 
 
-
+const userLogout = (req,res)=>{
+  res.cookie("token","", {maxAge:1})
+  return res.status(200).render("userlogin",{errorMsg:"Logout Success"})
+}
 
 
 module.exports = {
@@ -287,5 +304,6 @@ module.exports = {
   forgetPassword,
   forgetPasswordPost,
   resetPassword,
-  resetPasswordPost
+  resetPasswordPost,
+  userLogout
 };

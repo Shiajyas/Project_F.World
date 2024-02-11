@@ -1,6 +1,6 @@
 const express = require("express")
 const adminCategoryRoutes = express.Router()
-const upload = require("../utils/imageUploader")
+const {upload} = require("../utils/imageUploader")
 
 const  { 
     getCategory,

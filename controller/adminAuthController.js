@@ -5,7 +5,6 @@ const { validationResult } = require("express-validator")
 const jwt = require("jsonwebtoken")
 const util = require("util");
 const { error, log } = require('console');
-const sendEmail = require("../Utils/email")
 
 const adminSignupPost = [
     validatingRules,
@@ -13,7 +12,6 @@ const adminSignupPost = [
       const errors = validationResult(req);
   
       if (!errors.isEmpty()) {
-        const errorArray = errors.array().map((err) => err.msg);
       
         return res.status(401).json({status:"fail",message:err})
       } else {
@@ -22,7 +20,6 @@ const adminSignupPost = [
         try {
           const newAdmin = await Admin.create({ name, email, password, confirmPassword });
           const token = signToken(newAdmin._id);
-          const tokenWithBearer = `Bearer ${token}`
   
           console.log(newAdmin); 
           console.log(token);
@@ -41,7 +38,7 @@ const adminSignupPost = [
   ];
 
   
-const adminLoginPost = asyncHandler(async (req, res, next) => {
+const adminLoginPost = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
   
     if (!email || !password) {
@@ -169,6 +166,10 @@ const adminProtectRules = asyncHandler(async (req, res, next) => {
     return res.status(200).render("adminDahbord",{title: "about page",layout: "./layouts/main2"}) 
   }
   
+  const adminLogout = (req,res)=>{
+    res.cookie("token", "", {maxAge:1})
+    return res.render("adminLogin",{errorMsg:"Logout SuccessFul"})
+  }
 
   module.exports = {
     adminLogin,
@@ -176,5 +177,6 @@ const adminProtectRules = asyncHandler(async (req, res, next) => {
     adminLoginPost,
     adminDashbord,
     adminProtectRules,
-    adminRestrict
+    adminRestrict,
+    adminLogout
   }

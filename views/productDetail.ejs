@@ -1,0 +1,230 @@
+<style>
+    body {
+        overflow-x: hidden;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        background-color: #fff;
+    }
+
+    .product-image-container {
+        margin-top: 10px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .main-image {
+        width: 320px;
+        height: 320px;
+        max-width: 600px;
+        display: block;
+        margin: 0 auto;
+        cursor: zoom-in; /* Added cursor property for better indication */
+        transition: transform 0.5s;
+    }
+
+    .main-image.zoomed {
+        transform: scale(2);
+    }
+
+    .additional-images {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .additional-image-button {
+        width: 50px;
+        height: 50px;
+        margin: 0 5px;
+        cursor: pointer;
+        border: none;
+        background: none;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .additional-image {
+        width: 100%;
+        height: auto;
+        border: 1px solid #ddd;
+        cursor: pointer;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .additional-image:hover,
+    .additional-image-button:hover {
+        opacity: 0.7;
+    }
+
+    .details {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    .detailsP {
+        flex: 0 0 70%;
+        max-width: 70%;
+    }
+
+    .detailsM {
+        margin-top: 75px;
+        flex: 0 0 70%;
+        max-width: 70%;
+    }
+
+    .product-title {
+        color: #410543;
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .product-description {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    .price {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .vote {
+        font-size: 14px;
+        color: #888;
+        margin-bottom: 10px;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .action-buttons button {
+        padding: 10px 15px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .add-to-cart,
+    .buy-now {
+        background-color: #3498db;
+        color: #fff;
+        border: 1px solid #3498db;
+    }
+
+    .add-to-cart:hover,
+    .buy-now:hover {
+        background-color: #fc1313;
+    }
+
+    .like {
+        background-color: #e74c3c;
+        color: #fff;
+        border: 1px solid #e74c3c;
+    }
+
+    .like:hover,
+    .buy-now:hover,
+    .add-to-cart:hover {
+        background-color: #c0392b;
+    }
+
+    .fa-heart {
+        margin-right: 5px;
+    }
+
+    .rating {
+        font-size: 20px;
+        color: #f8d71c;
+        margin-bottom: 10px;
+    }
+
+    .rating .fa-star {
+        margin-right: 5px;
+    }
+
+    .rating .fa-star-o {
+        margin-right: 5px;
+        color: #ddd;
+    }
+</style>
+
+<div class="container detailsM">
+    <div class="card">
+        <div class="product-image-container">
+            <img src="<%= product.images[0] %>" class="main-image img-fluid" id="img-container" alt="Product Image" onclick="toggleZoom(event)">
+            <div class="additional-images">
+                <!-- Loop through additional images -->
+                <% for (let index = 0; index < product.images.length; index++) { %>
+                    <button class="additional-image-button" onclick="changeImage('<%= index %>')">
+                        <img src="<%= product.images[index] %>" class="additional-image" alt="Additional Image <%= index + 1 %>">
+                    </button>
+                <% } %>
+            </div>
+        </div>
+        <div class="details">
+            <div class="detailsP">
+                <h3 class="product-title"><%= product.name %></h3>
+                <div class="rating">
+                    <!-- Your star rating logic here -->
+                </div>
+                <h6 class="product-description"><strong>Description:</strong> <%= product.description %></h6>
+                <h4 class="price">Current Price: <span>$<%= product.price.toFixed(2) %></span></h4>
+                <p class="vote">Number of buyers enjoyed this product! <strong>(<%= product.numReviews %> Reviews)</strong></p>
+                <div class="action-buttons">
+                    <button class="add-to-cart btn btn-default" type="button">Add to Cart</button>
+                    <button class="buy-now btn btn-default" type="button">Buy Now</button>
+                    <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span>Wishlist</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    var $jq = jQuery.noConflict();
+
+    function toggleZoom(event) {
+        let imgElement = document.getElementById('img-container');
+        imgElement.classList.toggle('zoomed');
+
+        // Calculate position difference between cursor and image
+        var boundingRect = imgElement.getBoundingClientRect();
+        var cursorX = event.clientX - boundingRect.left;
+        var cursorY = event.clientY - boundingRect.top;
+
+        if (imgElement.classList.contains('zoomed')) {
+            imgElement.style.transformOrigin = cursorX + 'px ' + cursorY + 'px';
+        }
+    }
+
+    function changeImage(index) {
+        var imageUrl = $jq('.additional-image').eq(index).attr('src');
+        $jq('#img-container').attr('src', imageUrl);
+        resetZoom();
+    }
+
+    function resetZoom() {
+        let imgElement = document.getElementById('img-container');
+        imgElement.classList.remove('zoomed');
+    }
+</script>
