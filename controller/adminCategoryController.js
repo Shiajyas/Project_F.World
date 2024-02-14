@@ -3,6 +3,8 @@ const asyncHandler = require("express-async-handler")
 const mongoose = require("mongoose");
 const Product = require("../models/productData")
 const {filedCheker} = require("../utils/authHandler")
+const fs = require("fs")
+const path = require("path")
 
 const viewCategory = async (req, res) => {
     const success = req.flash('success');
@@ -76,13 +78,43 @@ const listCategory = asyncHandler(async (req, res) => {
     }
 })
 
+const deleteCategory = asyncHandler(async (req, res) => {
+  try {
+    // Find the category by ID
+    const category = await Category.findByIdAndDelete(req.params.id);
 
-const deleteCategory = asyncHandler(async(req,res)=>{
-    const  customer = await Category.deleteOne({_id:req.params.id})
-    req.flash("success","category deleted")
-    res.redirect('/admin/categories/view?status=2')
+    if (!category) {
+      req.flash("error", "Category not found");
+      return res.redirect("/admin/categories/view?status=2");
+    }
 
-})
+    // Delete the associated image
+    const imageToDelete = category.image;
+    if (imageToDelete) {
+      try {
+        // Construct the full path to the image file
+        const fullPath = path.join(__dirname, '..', 'public', 'productImages', imageToDelete);
+
+        // Delete the image file
+        fs.unlinkSync(fullPath);
+
+        req.flash("success", "Category and associated image deleted");
+        res.redirect('/admin/categories/view?status=2');
+      } catch (error) {
+        console.error(`Error deleting image: ${error.message}`);
+        req.flash("error", "Error deleting associated image");
+        res.redirect('/admin/categories/view?status=2');
+      }
+    } else {
+      req.flash("success", "Category deleted");
+      res.redirect('/admin/categories/view?status=2');
+    }
+  } catch (error) {
+    console.log(error.message);
+    req.flash("error", "Error deleting category");
+    res.redirect('/admin/categories/view?status=2');
+  }
+});
 
 
     const editCategory = asyncHandler(async (req, res) => {
@@ -92,7 +124,7 @@ const deleteCategory = asyncHandler(async(req,res)=>{
           throw new Error('No image in the request');
       }
       const fileName = file.filename;
-      const basePath = `${req.protocol}://${req.get('host')}/public/productImages`;
+      const basePath = `./public/productImages`;
 
         const updatedUser = {
           name: req.body.name,

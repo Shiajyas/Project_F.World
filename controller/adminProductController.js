@@ -5,6 +5,7 @@ const Product = require("../models/productData");
 const { filedCheker } = require("../utils/authHandler");
 const path = require("path")
 const imageProcessing = require("../utils/cropedImage")
+const fs = require("fs")
 
 const getProducts = asyncHandler(async (req, res) => {
   const messages = req.flash("error");
@@ -88,7 +89,7 @@ const addProducts = async (req, res) => {
           throw new Error('No images in the request');
       }
 
-      const basePath = `${req.protocol}://${req.get('host')}/public/cropedImage`;
+     
       const processedImages = await Promise.all(files.map(async (file) => {
           const inputFilePath = file.path;
           const outputFolderPath = './public/cropedImage';
@@ -209,10 +210,45 @@ const editProdect = asyncHandler(async (req, res) => {
   }
 });
 
+
 const deleteProdect = asyncHandler(async (req, res) => {
-  const product = await Product.deleteOne({ _id: req.params.id });
-  req.flash("success", "category deleted");
-  return res.redirect("/admin/products?status=2");
+  try {
+    // Find the product by ID
+    const product = await Product.findByIdAndDelete(req.params.id);
+
+    if (!product) {
+      req.flash("error", "Product not found");
+      return res.redirect("/admin/products?status=2");
+    }
+
+    // Construct absolute file paths using path.join
+    const imagesToDelete = product.images.map((filename) =>
+    path.join(__dirname, '..', '.', filename.replace(/\\/g, '/'))
+    );
+
+    // Delete the associated images
+    imagesToDelete.forEach((imageFilename) => {
+      try {
+        // Check if the file exists before deletion
+        if (fs.existsSync(imageFilename)) {
+          fs.unlinkSync(imageFilename);
+          console.log(`Deleted image: ${imageFilename}`);
+        } else {
+          console.log(`File not found: ${imageFilename}`);
+        }
+      } catch (error) {
+        console.error(`Error deleting image: ${error.message}`);
+        // Continue with other files even if one deletion fails
+      }
+    });
+
+    req.flash("success", "Product and associated images deleted");
+    return res.redirect("/admin/products?status=2");
+  } catch (error) {
+    console.log(error.message);
+    req.flash("error", "Error deleting product");
+    return res.redirect("/admin/products?status=2");
+  }
 });
 
 const searchProdect = asyncHandler(async (req, res) => {
