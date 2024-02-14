@@ -5,10 +5,7 @@ const categorySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    image: {
-        type: String,
-        default: "" 
-    }
+    image:  [{ type: String, required: true }], // Array of image paths
 }, { timestamps: true });
 
 const Category = mongoose.model('Category', categorySchema);
